@@ -12,18 +12,18 @@
         <link rel="stylesheet" type="text/css" href="css/metro.css">
 
 
-        <script type="text/javascript" src="js/jquery-1.7.2.min.js"></script>
-        <script type="text/javascript" src="js/jquery.transit.js"></script>
-        <script type="text/javascript" src="js/bootstrap.min.js"></script>
-        <script type="text/javascript" src="js/bootstrap.js"></script>
-        <script type="text/javascript" src="js/prettify.js"></script>
-        <script type="text/javascript" src="js/metro.js"></script>
+        <script type="text/javascript" src="lib/js/jquery-1.7.2.min.js"></script>
+        <script type="text/javascript" src="lib/js/jquery.transit.js"></script>
+        <script type="text/javascript" src="lib/js/bootstrap.min.js"></script>
+        <script type="text/javascript" src="lib/js/bootstrap.js"></script>
+        <script type="text/javascript" src="lib/js/prettify.js"></script>
+        <script type="text/javascript" src="lib/js/metro.js"></script>
 
 
 
         <style type="text/css">
             body {
-                background-color: #3A3A3A;
+                background-color:#FFFFFF;
             }
             td{
                 vertical-align: bottom;
@@ -203,7 +203,7 @@
                                 <div style="padding: 10px;">
                                     <img src="' . $image[$i] . '" style="height:100px;width:100px;margin-top:35px;margin-right: 20px" class="place-left" />
                                      <div style="margin-left: 115px; margin-top: 10px">
-                                      <p style="font-size: 20px; margin-top: 50px">' .$title[$i] .'</p>
+                                      <p style="font-size: 20px;margin-top: 50px">' .$title[$i] .'</p>
                                     </div>
                                 </div>
                            
@@ -246,12 +246,7 @@
         </script>
 
         
-  <footer>
-    <hr style="background-color: black;">
-    <p class="pull-right" style="margin-right:10px"><a target="_blank" href="http://in.linkedin.com/pub/arti-khatwani/70/b94/392" style="color:white">By Alph@</a></p>
-
-            <p class="body-text" style="color:black;font-size:13px; margin-left:65px;">Rss Feeds Reader</p>
-  </footer>
+ 
       
     </body>
 </html>

@@ -25,15 +25,15 @@
         <link rel="stylesheet" type="text/css" href="css/metro.css">
         <link rel="stylesheet" type="text/css" href="css/site.css">
 
-        <script type="text/javascript" src="js/jquery-1.7.2.min.js"></script>
-        <script type="text/javascript" src="js/jquery.transit.js"></script>
-        <script type="text/javascript" src="js/jquery.mousewheel.js"></script>
-        <script type="text/javascript" src="js/jquery.scrollTo.js"></script>
-        <script type="text/javascript" src="js/bootstrap.min.js"></script>
-        <script type="text/javascript" src="js/prettify.js"></script>
-        <script type="text/javascript" src="js/metro.js"></script>
-        <script type="text/javascript" src="js/site.js"></script>
-        <script type="text/javascript" src="js/google-analytics.js"></script>     
+        <script type="text/javascript" src="lib/js/jquery-1.7.2.min.js"></script>
+        <script type="text/javascript" src="lib/js/jquery.transit.js"></script>
+        <script type="text/javascript" src="lib/js/jquery.mousewheel.js"></script>
+        <script type="text/javascript" src="lib/js/jquery.scrollTo.js"></script>
+        <script type="text/javascript" src="lib/js/bootstrap.min.js"></script>
+        <script type="text/javascript" src="lib/js/prettify.js"></script>
+        <script type="text/javascript" src="lib/js/metro.js"></script>
+        <script type="text/javascript" src="lib/js/site.js"></script>
+        <script type="text/javascript" src="lib/js/google-analytics.js"></script>     
 
         <!-- for metro ui-->
 
@@ -48,7 +48,7 @@
 
         <style>
             body {
-                background-color: #3A3A3A;
+                background-color:  #FFFFFF;
                 margin: 0;
                 padding: 0;
             }
@@ -134,11 +134,6 @@
 
         </div>
     </div>
-     <footer>
-    <hr style="background-color: black;">
-    <p class="pull-right" style="margin-right:10px"><a target="_blank" href="http://in.linkedin.com/pub/arti-khatwani/70/b94/392" style="color:white">By Alph@</a></p>
-
-            <p class="body-text" style="color:black;font-size:13px; margin-left:65px;">Rss Feeds Reader</p>
-  </footer>
+    
 
 </html>
