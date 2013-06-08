@@ -19,7 +19,11 @@
 
     <head> 
         <!-- for metro ui-->
+      
         <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+         <link rel="stylesheet" type="text/css" href="css/bootstrap.css">
+        <link rel="stylesheet" type="text/css" href="css/bootstrap-responsive.min.css">
+        <link rel="stylesheet" type="text/css" href="css/bootstrap-responsive.css">
         <link rel="stylesheet" type="text/css" href="css/font-awesome.css">
         <link rel="stylesheet" type="text/css" href="css/prettify.css">
         <link rel="stylesheet" type="text/css" href="css/metro.css">
@@ -73,21 +77,22 @@
         //
         ///////////////////////////////////////////////////////////////////////////////////////////////////--> 
 
-        <script type='text/javascript' src='js/jquery.min.js'></script>
-        <script type='text/javascript' src='js/jquery.mobile.customized.min.js'></script>
-        <script type='text/javascript' src='js/jquery.easing.1.3.js'></script> 
-        <script type='text/javascript' src='js/camera.min.js'></script> 
+        <script type='text/javascript' src='lib/js/jquery.min.js'></script>
+        <script type='text/javascript' src='lib/js/jquery.mobile.customized.min.js'></script>
+        <script type='text/javascript' src='lib/js/jquery.easing.1.3.js'></script> 
+        <script type='text/javascript' src='lib/js/camera.min.js'></script> 
 
 
         <script>
               
             jQuery(function(){
-			 
+	          height:30% 
                 jQuery('#camera_random').camera({
-                      
-                    thumbnails: false,
+                  
+                    thumbnails: true,
                     fx: 'simpleFade',
                     hover:false
+                   
                 });
            
             });
@@ -98,15 +103,22 @@
     </head>
     <?php include("header.html");
     ?>
+         
+    
     <div class="container-fluid">
         <div class="row-fluid">
+            <div class="container" style="margin-left:40%;margin-right: 30%;">
+                   <a href="generatePDF.php"><button type="button" name="fat-btn" id="fat-btn" class="btn btn-primary container span2" data-loading-text="Downloading...">Download</button></a>
+                </div>
+            <br>
 
-            <div id="slideshow" class="fluid_container" style="">
-                <div class="camera_wrap camera_black_skin" id="camera_random">
+            <div id="slideshow" class="fluid_container">
+                <div class="camera_wrap camera_black_skin" id="camera_random" >
+                    
                     <?php
                     $size = sizeof($title);
                     for ($i = 0; $i < $size; $i++) {
-                        echo '<div class="cameraSlide topToBottom" data-portrait="' . $image[$i] . '" data-src="' . $image[$i] . '">
+                        echo '<div class="cameraSlide topToBottom" data-src="'.$image[$i].'">
 			<div class="camera_caption moveFromLeft">
                     ' . $title[$i] . '<em> </em>
                 </div>
@@ -115,21 +127,9 @@
                     ?>
                 </div><!-- #camera_random -->
             </div><!-- .fluid_container -->
-              <div class="tile tile-vertical bg-color-darken" style="float:right;right:85px;top:350px;height:100px;width:160px;position:fixed;">
-            <div class="" id="download" style="float:right;position:fixed;right:60px;width:160px;">
-                <div class="tile-icon-large"  style="width:90px;margin-left:9px;position:fixed;margin-top:7px">
-                    <a href="generatePDF.php"><img src="images/pdf.jpg" /></a>
-                </div>
-            </div>
-            </div>
-            <div class="tile bg-color-darken" style="height:100px;width:160px;position:fixed;top:350px;">
-                <div class="tile-icon-large"  style="width:130px;margin-left: 12px;position:fixed;margin-top:20px">
-                    <a href="FeedsList.php"><img src="images/goback.jpg" /></a> 
-                </div>
-                <span class="tile-label" style="font-size:20pt;position:fixed;"></span>
-            </div> 
-
-            <!-- back tile ends-->
+           
+           
+            
             <div style="clear:both; display:block; height:100px"></div>	
 
         </div>

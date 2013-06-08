@@ -1,0 +1,19 @@
+/* 
+    Document   : mycss
+    Created on : 7 Jun, 2013, 11:15:52 PM
+    Author     : Arti
+    Description:
+        Purpose of the stylesheet follows.
+*/
+
+root { 
+    display: block;
+}
+.wrapper{
+    text-align: center;
+    
+}
+.button {
+    position: absolute;
+    top: 50%;
+}
