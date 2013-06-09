@@ -65,7 +65,7 @@ else
                 
 // $description[$i] = iconv('UTF-8', 'ISO-8859-1//TRANSLIT', $description[$i]);
            //$description[$i] = htmlspecialchars($description[$i], ENT_QUOTES);
-			$sub[$i]=substr($description,0,340);
+			$sub[$i]=substr($description,0,150);
 			$link[$i]=$xml->channel->item[$i]->link;
                          $link[$i] = iconv('UTF-8', 'ISO-8859-1//TRANSLIT', $link[$i]);
                          $link[$i] = htmlspecialchars($link[$i], ENT_QUOTES);
@@ -92,12 +92,8 @@ else
     }
 public function resizeImage($title,$image)
 {
-    ini_set('max_execution_time', 400);
-    foreach(glob('Image_*') as $file)
-    {  if(is_file($file))
-     unlink($file);
-    }
-    
+    ini_set('max_execution_time',500);
+    $finalimage=array();
     $size=sizeof($title);
     for($i=0;$i<$size;$i++)
     {
@@ -122,18 +118,27 @@ public function resizeImage($title,$image)
 	
 		$old_image = imagecreatefromgif($image[$i]);
 	}
-  imagecopyresized($new_image, $old_image, 0, 0, 0, 0, $new_width, $new_height, $image_width, $image_height);
-if($type == "image/jpeg") {
-		imagejpeg($new_image,'Image_'.$i.'.jpeg');
-                $image[$i]='Image_'.$i.'.jpeg';
+       imagecopyresized($new_image, $old_image, 0, 0, 0, 0, $new_width, $new_height, $image_width, $image_height);
+         if($type == "image/jpeg") {
+                   ob_start();
+		   imagejpeg($new_image, NULL, 100);
+                   $rawImageBytes = ob_get_clean();
+                  $finalimage[$i]=base64_encode($rawImageBytes);
+              
 	} else if($type == "image/png"){
-		imagepng($new_image,'Image_'.$i.'.png');
-               $image[$i]='Image_'.$i.'.png';
+		 ob_start();
+		   imagepng($new_image, NULL, 9);
+                   $rawImageBytes = ob_get_clean();
+                  $finalimage[$i]=base64_encode($rawImageBytes);
+             
 	}
 	else
 	{
-	imagegif($new_image,'Image_'.$i.'.gif');
-         $image[$i]='Image_'.$i.'.gif';
+                    ob_start();
+		   imagegif($new_image, NULL);
+                   $rawImageBytes = ob_get_clean();
+                  $finalimage[$i]=base64_encode($rawImageBytes);
+       
 	}
   
   
@@ -141,11 +146,25 @@ if($type == "image/jpeg") {
 
  $whole = '<html><body>';
         for ($i = 0; $i < $size; $i++) {
-            $whole = $whole . '<table style="page-break-after: always;"><tr><td><h2>' . $title[$i] . '</h2></td></tr><tr><td><img src="' . $image[$i] . '" /></td></tr></table>';
-        }
+            //combinig data for pdf
+            $whole = $whole . '<table style="page-break-after: always;"><tr><td><h2>' . $title[$i] . '</h2></td></tr><tr><td><img src="data:image/png;base64,'.$finalimage[$i].'" /></td></tr></table>';
+      
+            //saving images in a file
+            
+ 
+            }
         $whole.="</body></html>";
         
-        return array($whole,$image);
+        
+          
+
+
+
+
+
+
+        
+        return array($whole,$finalimage);
 }
 }
 ?>
