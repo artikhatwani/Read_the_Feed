@@ -1,7 +1,12 @@
-<div class="navbar navbar-inverse">
+<html> 
+<head>
+     <link rel="stylesheet" type="text/css" href="css/bootstrap-responsive.min.css">
+            <link rel="stylesheet" type="text/css" href="css/bootstrap-responsive.css">
+</head>
+<div class="navbar">
     <div class="navbar-inner">
         <div class="container-fluid">
-        <div class="pull-left" style="margin-top: 3px; margin-right: 12px;margin-bottom:1px;" >
+        <div class="pull-left" style="margin-top: 6px; margin-right: 12px;margin-bottom:1px;" >
                             <img src="images/rss.jpg" style="height:30px;"/>
         </div>
             <!-- .btn-navbar is used as the toggle for collapsed navbar content -->
@@ -12,18 +17,18 @@
             </a>
 
             <!-- Be sure to leave the brand out there if you want it shown -->
-            <a class="brand" href="#">Read the Feed</a>
+            <a class="brand" href="index.php" style="color:black;margin-left: 10px;">Read   the   Feed</a>
 
             <!-- Everything you want hidden at 940px or less, place within here -->
-            <div class="nav-collapse collapse pull-right">
-             <form class="navbar-search pull-left" action="FeedsList.php" method="post">
-                 <div class="input-append">
-                      <input name="url" id="url" type="text" class="search-query span3" placeholder="Please Enter a Rss Feed URL">
-                      <button class="btn btn-inverse" type="submit">Read</button>
-                      </div>
-                  </form>
+           
+            <div class="nav-collapse collapse pull-right" style="margin-right: 40px;">
+             <form class="navbar-form pull-right" action="FeedsList.php" method="post">
+                 <input name="url" id="url" type="text" class="span3" placeholder="   Please Enter RSS Feed URL">
+           <button type="submit" class="btn">Read</button>
+           </form>
             </div>
-
+           
         </div>
     </div>
 </div>
+</html>

@@ -11,7 +11,8 @@ class Rss {
 	public $sub=array();
 	public $link="";
         public $url="";
-
+      
+    //public $ses_id=session_id();
     /*     * ********************************************** */
 
     public function validateFeed($sFeedURL) {
@@ -92,7 +93,12 @@ else
     }
 public function resizeImage($title,$image)
 {
-    ini_set('max_execution_time',500);
+    
+    $unique=  uniqid();
+   $folder_path='images/thumbnails/'.$unique.'/';
+  
+    $dir=mkdir('images/thumbnails/'.$unique.'/',0777);
+  
     $finalimage=array();
     $size=sizeof($title);
     for($i=0;$i<$size;$i++)
@@ -107,37 +113,53 @@ public function resizeImage($title,$image)
     $new_height=150;
     $new_image = imagecreatetruecolor($new_width, $new_height);
     
-     if($type == "image/jpeg") {
+             if($type == "image/jpeg") {
 		
 		$old_image=imagecreatefromjpeg($image[$i]);
-	
-	} elseif($type == "image/png") {
+	       }
+               elseif($type == "image/png") {
 		
 		$old_image = imagecreatefrompng($image[$i]);
-	} elseif($type == "image/gif"){
+        	} elseif($type == "image/gif"){
 	
 		$old_image = imagecreatefromgif($image[$i]);
-	}
-       imagecopyresized($new_image, $old_image, 0, 0, 0, 0, $new_width, $new_height, $image_width, $image_height);
+	        }
+                imagecopyresampled($new_image,$old_image, 0, 0, 0, 0, $new_width, $new_height, $image_width, $image_height);
+        
          if($type == "image/jpeg") {
-                   ob_start();
-		   imagejpeg($new_image, NULL, 100);
-                   $rawImageBytes = ob_get_clean();
-                  $finalimage[$i]=base64_encode($rawImageBytes);
+               if($dir==true)
+               {
+                 imagejpeg($new_image,$folder_path.$i.'.jpeg',100);  
+                 $finalimage[$i]=$folder_path.$i.'.jpeg';
+               }
+               else{
+		   imagejpeg($new_image,$unique.'_'.$i.'.jpeg',100);
+               }
               
 	} else if($type == "image/png"){
-		 ob_start();
-		   imagepng($new_image, NULL, 9);
-                   $rawImageBytes = ob_get_clean();
-                  $finalimage[$i]=base64_encode($rawImageBytes);
-             
+		
+		      
+              if($dir==true)
+               {
+                 imagepng($new_image,$folder_path.$i.'.png',9);  
+                 $finalimage[$i]=$folder_path.$i.'.png';
+               }
+               else{
+		   imagejpeg($new_image,$unique.'_'.$i.'.png',9);
+               }
 	}
 	else
 	{
-                    ob_start();
-		   imagegif($new_image, NULL);
-                   $rawImageBytes = ob_get_clean();
-                  $finalimage[$i]=base64_encode($rawImageBytes);
+                  
+		  
+                  if($dir==true)
+               {
+                 imagegif($new_image,$folder_path.$i.'.gif'); 
+                 $finalimage[$i]=$folder_path.$i.'.gif';
+               }
+               else{
+		    imagegif($new_image,$unique.'_'.$i.'.gif');
+               }
        
 	}
   
@@ -147,7 +169,7 @@ public function resizeImage($title,$image)
  $whole = '<html><body>';
         for ($i = 0; $i < $size; $i++) {
             //combinig data for pdf
-            $whole = $whole . '<table style="page-break-after: always;"><tr><td><h2>' . $title[$i] . '</h2></td></tr><tr><td><img src="data:image/png;base64,'.$finalimage[$i].'" /></td></tr></table>';
+            $whole = $whole . '<table style="page-break-after: always;"><tr><td><h2>' . $title[$i] . '</h2></td></tr><tr><td><img src="'.$finalimage[$i].'" /></td></tr></table>';
       
             //saving images in a file
             
@@ -156,15 +178,12 @@ public function resizeImage($title,$image)
         $whole.="</body></html>";
         
         
-          
-
-
-
-
-
-
-        
-        return array($whole,$finalimage);
+    return array($whole,$finalimage);
+}
+function rrmdir($dir) { 
+  foreach(glob($dir . '/*') as $file) { 
+    if(is_dir($file)) rrmdir($file); else unlink($file); 
+  } rmdir($dir); 
 }
 }
 ?>

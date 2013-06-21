@@ -12,6 +12,7 @@
         
         <link rel="stylesheet" type="text/css" href="css/metro.css">
       
+        <script type="text/javascript" src="lib/js/bootstrap.min.js"></script>
         <style type="text/css">
             body {
                background-color:  #FFFFFF;

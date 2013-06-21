@@ -13,7 +13,7 @@
         <link rel="stylesheet" type="text/css" href="css/font-awesome.css">
         <link rel="stylesheet" type="text/css" href="css/prettify.css">
         <link rel="stylesheet" type="text/css" href="css/metro.css">
-         <link rel="stylesheet" type="text/css" href="css/mycss.css">
+        <link rel="stylesheet" type="text/css" href="css/mycss.css">
 
         <script type="text/javascript" src="lib/js/jquery-1.7.2.min.js"></script>
         <script type="text/javascript" src="lib/js/jquery.transit.js"></script>
@@ -42,7 +42,7 @@
 
 
         <?php
-        
+         ini_set('max_execution_time',600);
         $htmlData = "";
         $title = array();
         $image = array();
@@ -56,10 +56,12 @@
             } else {
                 $url = $_GET["url"];
             }
-
+             
             require_once("class.Rss.php");
             $rssObj = new Rss();
-            
+            $dir='images/thumbnails/';
+          //  $rssObj->rrmdir($dir);
+           
             $GLOBALS['valid'] = $rssObj->validateFeed($url);
            $return = $rssObj->validateFeed($url);
             
@@ -81,12 +83,13 @@
                
                 $htmlData=$data[0];
                 $_SESSION['htmlData']=$htmlData;
-                $GLOBALS['image'] = $data[1];
+                 $GLOBALS['image'] = $data[1];
+
 
                 $GLOBALS['description'] = $whole[2];
 
                 $GLOBALS['link'] = $whole[3];
-
+//                $GLOBALS['ses_id']=session_id();
                 $size = sizeof($GLOBALS['title']);
                 for ($i = 0; $i < $size; $i++) {
 
@@ -102,12 +105,12 @@
                 ?>
 
                 <!-- body of elements -->
-                <div class="container container-fluid">
+                <div class="container-fluid">
                  <div class="row-fluid">
                   <div class="span2"></div>
                   <div class="span6">
-                      <div class="wrapper"><a href="generatePDF.php"><button type="button" name="fat-btn" id="fat-btn" class="btn btn-primary container span3" data-loading-text="Downloading...">Download</button></a>
-          <a href="Slider.php"><button type="button" class="btn btn-primary pull-right span3">Slide Show</button></a><br></div><br>             
+                      <div class="wrapper" style="padding:5px;margin:5px;"><a href="generatePDF.php"><button type="button" name="fat-btn" id="fat-btn" class="btn btn-primary container span3" data-loading-text="Downloading...">Download</button></a>
+          <a href="Slider.php" style="padding:5px;margin: 5px;"><button type="button" class="btn btn-primary pull-right span3">Slide Show</button></a><br></div><br>             
  <?php
                       
                 $size = sizeof($title);
@@ -116,7 +119,7 @@
 
                    echo '<div class="media thumbnail">
               <a class="pull-left" href="Slider.php">
-                <img class="media-object img-polaroid" data-src="holder.js/64x64" alt="64x64" src="data:image/jpeg;base64,'.$image[$i].'" style="width: 64px; height: 64px;">
+                <img class="media-object img-polaroid" data-src="holder.js/64x64" alt="64x64" src="'.$image[$i].'" style="width: 64px; height: 64px;">
               </a>
               <div class="media-body">
                <a href="'.$link[$i].'" target="_blank"> <h4 class="media-heading">'.$title[$i].'</h4></a>
@@ -175,8 +178,8 @@
             }
             for ($i = 0; $i < $size; $i++) {
                 echo '<div class="media thumbnail">
-              <a class="pull-left" href="slideshow.php">
-                <img class="media-object img-polaroid" data-src="holder.js/64x64" alt="64x64" src="data:image/jpeg;base64,'.$image[$i].'" style="width: 64px; height: 64px;" >
+              <a class="pull-left" href="Slider.php">
+                <img class="media-object img-polaroid" data-src="holder.js/64x64" alt="64x64" src="'.$image[$i].'" style="width: 64px; height: 64px;" >
               </a>
               <div class="media-body">
                <a href="'.$link[$i].'" target="_blank"> <h4 class="media-heading">'.$title[$i].'</h4></a>
