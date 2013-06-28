@@ -1,0 +1,3 @@
+RewriteEngine On
+
+RewriteRule ^u/(.*) FeedsList.php?url=$1 [R,L]

@@ -77,7 +77,7 @@ else
             if ($tags->length == 0) { //If no image is found
 
 
-                $image[$i] = "images/noimage.png";
+                $image[$i] = "images/noimage.gif";
             }
 
             foreach ($tags as $tag) {
@@ -93,16 +93,32 @@ else
     }
 public function resizeImage($title,$image)
 {
-    
-    $unique=  uniqid();
-   $folder_path='images/thumbnails/'.$unique.'/';
-  
-    $dir=mkdir('images/thumbnails/'.$unique.'/',0777);
+       $unique=  uniqid();
+      $folder_path='images/thumbnails/';
+    // set up basic connection
+$conn_id = ftp_connect('freetzi.com');
+
+// login with username and password
+$login_result = ftp_login($conn_id,'readthefeed.coolpage.biz','deepak5306');
+
+// try to create the directory $dir
+//$dir=ftp_mkdir($conn_id, 'images/thumbnails/'.$unique.'/');
+ ftp_chmod($conn_id, 0777, $folder_path);
+
+// close the connection
+ftp_close($conn_id);
+   
+ 
   
     $finalimage=array();
     $size=sizeof($title);
     for($i=0;$i<$size;$i++)
     {
+		 if($image[$i]=='images/noimage.gif')
+        {
+             $finalimage[$i]=$image[$i];
+        }
+				else{
     $image[$i]=str_replace("https", "http", $image[$i]);
    // echo $image[$i];
     $imagesize=getimagesize($image[$i]);
@@ -124,45 +140,41 @@ public function resizeImage($title,$image)
 	
 		$old_image = imagecreatefromgif($image[$i]);
 	        }
-                imagecopyresampled($new_image,$old_image, 0, 0, 0, 0, $new_width, $new_height, $image_width, $image_height);
+                imagecopyresized($new_image,$old_image, 0, 0, 0, 0, $new_width, $new_height, $image_width, $image_height);
         
          if($type == "image/jpeg") {
-               if($dir==true)
-               {
-                 imagejpeg($new_image,$folder_path.$i.'.jpeg',100);  
-                 $finalimage[$i]=$folder_path.$i.'.jpeg';
-               }
-               else{
-		   imagejpeg($new_image,$unique.'_'.$i.'.jpeg',100);
-               }
+               
+                 imagejpeg($new_image,$folder_path.$unique.'_'.$i.'.jpeg',100);  
+                 $finalimage[$i]=$folder_path.$unique.'_'.$i.'.jpeg';
+								 
+                  $fp = fopen( $finalimage[$i], 'r'); 
+                 ftp_fput($conn_id, $finalimage[$i], $fp, FTP_BINARY); 
+               
               
 	} else if($type == "image/png"){
 		
 		      
-              if($dir==true)
-               {
-                 imagepng($new_image,$folder_path.$i.'.png',9);  
-                 $finalimage[$i]=$folder_path.$i.'.png';
-               }
-               else{
-		   imagejpeg($new_image,$unique.'_'.$i.'.png',9);
-               }
+                 imagepng($new_image,$folder_path.$unique.'_'.$i.'.png',9);
+                   $finalimage[$i]=$folder_path.$unique.'_'.$i.'.png';
+									 
+                   $fp = fopen( $finalimage[$i], 'r'); 
+                 ftp_fput($conn_id,  $finalimage[$i], $fp, FTP_BINARY); 
+               
+             
 	}
 	else
 	{
                   
 		  
-                  if($dir==true)
-               {
-                 imagegif($new_image,$folder_path.$i.'.gif'); 
-                 $finalimage[$i]=$folder_path.$i.'.gif';
-               }
-               else{
-		    imagegif($new_image,$unique.'_'.$i.'.gif');
-               }
+                 imagegif($new_image,$folder_path.$unique.'_'.$i.'.gif'); 
+                 $finalimage[$i]=$folder_path.$unique.'_'.$i.'.gif';
+								
+                  $fp = fopen( $finalimage[$i], 'r'); 
+                 ftp_fput($conn_id,  $finalimage[$i], $fp, FTP_BINARY); 
+               
        
 	}
-  
+  }
   
 }
 
@@ -180,10 +192,22 @@ public function resizeImage($title,$image)
         
     return array($whole,$finalimage);
 }
-function rrmdir($dir) { 
-  foreach(glob($dir . '/*') as $file) { 
-    if(is_dir($file)) rrmdir($file); else unlink($file); 
-  } rmdir($dir); 
+function recursiveDelete($directory)
+{
+
+$handle = ftp_connect('freetzi.com');
+
+// login with username and password
+ftp_login($handle,'readthefeed.coolpage.biz','deepak5306');
+# here we attempt to delete the file/directory
+ftp_chdir($handle, $directory);
+$files = ftp_nlist($handle, ".");
+foreach ($files as $file)
+{
+    ftp_delete($handle, $file);
+} 
+  
 }
+
 }
 ?>

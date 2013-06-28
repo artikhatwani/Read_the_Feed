@@ -50,17 +50,15 @@
         $link = array();
         $data=array();
 
-        if (isset($_POST['url']) || isset($_GET['url'])) {
-            if (isset($_POST["url"])) {
-                $url = $_POST["url"];
-            } else {
+        if (isset($_GET['url'])) {
+           
                 $url = $_GET["url"];
-            }
+            
              
             require_once("class.Rss.php");
             $rssObj = new Rss();
             $dir='images/thumbnails/';
-          //  $rssObj->rrmdir($dir);
+           $rssObj->recursiveDelete($dir);
            
             $GLOBALS['valid'] = $rssObj->validateFeed($url);
            $return = $rssObj->validateFeed($url);
@@ -110,7 +108,7 @@
                   <div class="span2"></div>
                   <div class="span6">
                       <div class="wrapper" style="padding:5px;margin:5px;"><a href="generatePDF.php"><button type="button" name="fat-btn" id="fat-btn" class="btn btn-primary container span3" data-loading-text="Downloading...">Download</button></a>
-          <a href="Slider.php" style="padding:5px;margin: 5px;"><button type="button" class="btn btn-primary pull-right span3">Slide Show</button></a><br></div><br>             
+          <a href="slideshow.php" style="padding:5px;margin: 5px;"><button type="button" class="btn btn-primary pull-right span3">Slide Show</button></a><br></div><br>             
  <?php
                       
                 $size = sizeof($title);
